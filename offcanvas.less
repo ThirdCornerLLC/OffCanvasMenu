@@ -1,0 +1,110 @@
+@screen-sm-max: 40em;
+@screen-md-max: 64em;
+@screen-lg-max: 90em;
+
+@sidebar-nav-width: 10%;
+@sidebar-info-width: 20%;
+@offcanvas-width: 65%;
+
+@transition-time: 0.65s;
+
+/* General Sidebar Styles */
+[role="navigation"], [role="information"], main {
+    transition: margin @transition-time ease;
+}
+[role="navigation"] {
+    float: left;
+}
+[role="information"] {
+    float: right;
+}
+
+/* Both Sidebars */
+@media (min-width: @screen-lg-max) {
+	[role="navigation"] {
+		width: @sidebar-nav-width;
+	}
+    [role="information"] {
+        width: @sidebar-info-width;
+    }
+    main {
+    	display: inline-block;
+        width: (100% - (@sidebar-nav-width + @sidebar-info-width));
+    }
+}
+
+/* Left sidebar and right offcanvas */
+@media (min-width: @screen-md-max) and (max-width: @screen-lg-max) {
+    @sidebar-nav-width: 15%;
+	[role="navigation"] {
+        margin-left: 0;
+		width: @sidebar-nav-width;
+	}
+    [role="information"] {
+        margin-right: -@offcanvas-width;
+        width: @offcanvas-width;
+    }
+    main {
+        margin-left: @sidebar-nav-width;
+        width: (100% - @sidebar-nav-width);
+    }
+
+    /* Information Offcanvas is shown */
+	body.information-active {
+        [role="navigation"] {
+        	margin-left: -@offcanvas-width;
+        	width: @sidebar-nav-width;
+        }
+        [role="information"] {
+            margin-right: 0;
+            width: @offcanvas-width;
+        }
+        main {
+        	margin-left: -(@offcanvas-width - @sidebar-nav-width);
+        }
+    }
+}
+
+/* Both offcanvas */
+@media (max-width: @screen-md-max) {
+    [role="navigation"] {
+        margin-left: -@offcanvas-width;
+        width: @offcanvas-width;
+    }
+    [role="information"] {
+        margin-right: -@offcanvas-width;
+        width: @offcanvas-width;
+    }
+    main {
+        width: 100%;
+        margin: 0;
+    }
+
+	body {
+		&.information-active {
+            [role="navigation"] {
+                margin-left: -@offcanvas-width;
+            }
+            [role="information"] {
+                margin-right: 0;
+                width: @offcanvas-width;
+            }
+	        main {
+	        	margin-left: -(@offcanvas-width);
+	        }
+	    }
+	    &.navigation-active {
+            [role="navigation"] {
+                margin-left: 0;
+                width: @offcanvas-width;
+            }
+            [role="information"] {
+                margin-right: -@offcanvas-width;
+                width: @offcanvas-width;
+            }
+	    	main {
+	    		margin-left: @offcanvas-width;
+	    	}
+	    }
+	}
+}
